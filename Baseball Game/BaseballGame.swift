@@ -18,6 +18,7 @@ class BaseballGame {
     var gameTryCount: [Int] = [] // 게임 시도 횟수 카운터 배열 전역변수
     
     func start() {
+        /// 게임 메인 메뉴를 보여주고, 번호를 입력받아 해당 기능을 불러오는 함수
         var option: Int
         
         while true {
@@ -44,19 +45,26 @@ class BaseballGame {
     }
     
     func showRecord(record: [Int]) {
+        /// 게임 기록 보기 함수.
         print("< 게임 기록 보기 >")
-        for i in 0..<record.count {
-            print("\(i+1)번째 게임의 시도 횟수: \(record[i])")
+        
+        if record.count == 0 {
+            print("게임을 플레이한 기록이 없습니다.")
+        } else {
+            for i in 0..<record.count {
+                print("\(i+1)번째 게임의 시도 횟수: \(record[i])")
+            }
         }
     }
     
     func playGame() -> Int {
+        /// 게임 플레이 함수. 정답 배열을 준비하고, 게임 승리 변수가 true가 될 때까지 정상 입력을 받아 비교하며, 정상 입력을 받은 횟수를 반환합니다.
         var strikeCount = 0
         var ballCount = 0
         var isGameWin: Bool = false
         var playCount = 0
         
-        print("\n< 게임을 시작합니다 >")
+        print("\n< 새 게임을 시작합니다! >")
         let answer = makeAnswer() // 정답 배열 준비
         var input: [Int] // 올바른 입력값을 받을 배열 준비
         
@@ -96,7 +104,7 @@ class BaseballGame {
     }
     
     func makeAnswer() -> [Int] {
-        /// 1에서 9까지의 수 중 중복 없이 3개를 뽑아 숫자 배열로 리턴하는 함수
+        /// 정답을 만드는 함수. 0에서 9까지의 수 중 중복 없이 3개를 뽑아 정수 배열로 반환합니다.
         let range = Array(1...9)
         
         // range 배열을 순서를 섞어 앞에서 세개만 뽑은 배열
@@ -106,7 +114,7 @@ class BaseballGame {
     }
     
     func getInput() -> [Int] {
-        /// 세자리 숫자를 문제없이 입력받는지 확인한 후 숫자 배열로 리턴하는 함수
+        /// 정상 입력을 받는 함수. 문제없이 세자리 숫자를 입력받으면 정수 배열로 변환해 반환합니다.
         /// - 문제
         ///     - 입력이 3자리여야 함.
         ///     - 모두 숫자여야 함.
