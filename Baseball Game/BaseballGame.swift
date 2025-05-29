@@ -14,62 +14,95 @@
 
 import Foundation
 
+class GamePrinter {
+    func showMainMenu() {
+        print("""
+                ##############################################
+                #            ⚾️ 𝐵𝐴𝑆𝐸𝐵𝐴𝐿𝐿 𝐺𝐴𝑀𝐸                #
+                #     환영합니다! 원하시는 항목의 번호를 입력해주세요.    #
+                #    1. 게임 시작  2. 게임 기록 보기  3. 게임 종료    #
+                ##############################################
+                """
+        )
+    }
+    
+    func showRecords(_ record: [Int]) {
+        print("< 게임 기록 >")
+        
+        if record.count == 0 {
+            print("게임을 플레이한 기록이 없습니다.")
+        } else {
+            for index in 0..<record.count {
+                print("\(index + 1)번째 게임의 시도 횟수: \(record[index])")
+            }
+        }
+    }
+    
+    func showGameResult(strike: Int, ball: Int) {
+        if strike == 0 && ball == 0 { // 두 카운트가 다 0이면
+            print("Nothing")
+        } else {
+            if strike > 0 { print("\(strike) 스트라이크 ", terminator: "") }
+            if ball > 0 { print("\(ball) 볼", terminator: "") }
+            print() // 개행용
+        }
+    }
+        
+    func winMessage() {
+        print("5252 젠장 실화냐고 ㅋㅋ 게임을 깨버린 거냐고")
+    }
+    
+    func sayGoodBye() {
+        print("게임을 종료합니다.")
+    }
+    
+    func invalidOptionMessage() {
+        print("올바른 번호를 입력해주세요.")
+    }
+    
+    func startGameMessage() {
+        print("\n< 새 게임을 시작합니다! >")
+    }
+}
+
 class BaseballGame {
     var gameTryCount: [Int] = [] // 게임 시도 횟수 카운터 배열 전역변수
+    private let printer = GamePrinter()
     
     func start() {
         /// 게임 메인 메뉴를 보여주고, 번호를 입력받아 해당 기능을 불러오는 함수
-        var option: Int
+        
         
         while true {
-            print("##############################################")
-            print("#            ⚾️ 𝐵𝐴𝑆𝐸𝐵𝐴𝐿𝐿 𝐺𝐴𝑀𝐸                #")
-            print("#     환영합니다! 원하시는 항목의 번호를 입력해주세요.    #")
-            print("#    1. 게임 시작  2. 게임 기록 보기  3. 게임 종료    #")
-            print("##############################################")
-            
-            option = Int(readLine() ?? "") ?? 0
+            printer.showMainMenu()
+            var option = Int(readLine() ?? "") ?? 0
             
             switch option {
             case 1:
                 gameTryCount.append(playGame())
             case 2:
-                showRecord(record: gameTryCount)
+                printer.showRecords(gameTryCount)
             case 3:
-                print("게임을 종료합니다.")
-                exit(0)
+                printer.sayGoodBye()
+                return
             default :
-                print("올바른 번호를 입력해주세요.")
+                printer.invalidOptionMessage()
             }
         }
     }
     
-    func showRecord(record: [Int]) {
-        /// 게임 기록 보기 함수.
-        print("< 게임 기록 보기 >")
-        
-        if record.count == 0 {
-            print("게임을 플레이한 기록이 없습니다.")
-        } else {
-            for i in 0..<record.count {
-                print("\(i+1)번째 게임의 시도 횟수: \(record[i])")
-            }
-        }
-    }
-    
-    func playGame() -> Int {
+    private func playGame() -> Int {
         /// 게임 플레이 함수. 정답 배열을 준비하고, 게임 승리 변수가 true가 될 때까지 정상 입력을 받아 비교하며, 정상 입력을 받은 횟수를 반환합니다.
-        var strikeCount = 0
-        var ballCount = 0
-        var isGameWin: Bool = false
+        let answer = makeAnswer() // 정답 배열 준비
         var playCount = 0
         
-        print("\n< 새 게임을 시작합니다! >")
-        let answer = makeAnswer() // 정답 배열 준비
-        var input: [Int] // 올바른 입력값을 받을 배열 준비
+        printer.startGameMessage()
         
-        while !isGameWin {
-            input = getInput()
+        while true {
+            var strikeCount = 0
+            var ballCount = 0
+            
+            var input = getInput() // 올바른 입력값을 받을 배열 준비
             playCount += 1
             
             /// 디버깅용
@@ -93,8 +126,7 @@ class BaseballGame {
             }
             
             if strikeCount == 3 {
-                isGameWin = true
-                print("5252 젠장 실화냐고 ㅋㅋ 게임을 깨버린 거냐고")
+                printer.winMessage()
                 return playCount
             }
             
