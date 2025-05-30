@@ -16,7 +16,7 @@ class InputValidator {
     ///     - 모든 숫자는 서로 달라야 함.
     func getValidInput() -> [Int] {
         while true {
-            print("숫자를 입력하세요 : ")
+            print("숫자를 입력하세요 : ", terminator: "")
             let input = readLine() ?? ""
             
             let isLengthValid = input.count == 3

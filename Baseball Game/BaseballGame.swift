@@ -4,13 +4,6 @@
 //
 //  Created by 김우성 on 5/29/25.
 //
-// LV1 완
-// LV2 완
-// LV3 완
-// LV4 완
-// LV5 완
-// LV6 완
-
 
 import Foundation
 
@@ -52,9 +45,9 @@ class BaseballGame {
             let input = inputValidator.getValidInput() // 올바른 입력값을 받을 배열 준비
             playCount += 1
             
-            /// 디버깅용
-            print(answer)
-            print(input)
+//            /// 디버깅용
+//            print(answer)
+//            print(input)
             
             let (strike, ball) = answerChecker.pointCount(input: input, answer: answer)
             printer.showGameResult(strike: strike, ball: ball)
