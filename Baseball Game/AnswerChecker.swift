@@ -21,6 +21,8 @@ class AnswerChecker {
         return Array(digits.prefix(3))
     }
 
+    /// 입력값과 정답을 비교해 카운트하는 함수.
+    /// 스트라이크와 볼 개수를 튜플로 반환합니다.
     func pointCount(input: [Int], answer: [Int]) -> (strike: Int, ball: Int) {
         var strike = 0
         var ball = 0

@@ -8,8 +8,8 @@
 // LV2 완
 // LV3 완
 // LV4 완
-// LV5 아직
-// LV6 진행
+// LV5 완
+// LV6 완
 
 
 import Foundation
